@@ -131,11 +131,11 @@ body {
   
   transform: translate(0%, -45%)
     translate(
-      calc(cos(var(--angle)) * var(--radius-horizontal)),
-      calc(sin(var(--angle)) * var(--radius-vertical) - 80px)
+      calc(cos(var(--angle)) * var(--radius-horizontal)) ,
+      calc(sin(var(--angle)) * var(--radius-vertical) - 40px)
     )
-    scale(1.05) 
-    rotate(calc(var(--angle) - 270deg - var(--cards-from-center) * var(--offset-angle) / 2));
+    scale(1.25) 
+    rotate(calc(var(--angle) - 270deg - var(--cards-from-center) * var(--offset-angle) / 1.5));
   cursor: pointer;
   z-index: 100;
 
@@ -144,7 +144,7 @@ body {
   + * {
     transform: translate(0%, -45%)
       translate(
-        calc(cos(var(--angle)) * var(--radius-horizontal) + 30px),
+        calc(cos(var(--angle)) * var(--radius-horizontal) + 60px),
         calc(sin(var(--angle)) * var(--radius-vertical) - 20px)
       )
       rotate(calc(var(--angle) - 270deg - var(--offset-angle) / 2));
@@ -153,7 +153,7 @@ body {
     + * {
       transform: translate(0%, -45%)
         translate(
-          calc(cos(var(--angle)) * var(--radius-horizontal) + 30px),
+          calc(cos(var(--angle)) * var(--radius-horizontal) + 60px),
           calc(sin(var(--angle)) * var(--radius-vertical))
         )
         rotate(calc(var(--angle) - 270deg - var(--offset-angle) / 3));
@@ -165,7 +165,7 @@ body {
 .card-component > *:has(+ *:hover) {
   transform: translate(0%, -45%)
     translate(
-      calc(cos(var(--angle)) * var(--radius-horizontal) - 20px),
+      calc(cos(var(--angle)) * var(--radius-horizontal) - 60px),
       calc(sin(var(--angle)) * var(--radius-vertical) - 20px)
     )
     rotate(calc(var(--angle) - 270deg + var(--offset-angle) / 2));
@@ -175,7 +175,7 @@ body {
 .card-component > *:has(+ * + *:hover) {
   transform: translate(0%, -45%)
     translate(
-      calc(cos(var(--angle)) * var(--radius-horizontal) - 20px),
+      calc(cos(var(--angle)) * var(--radius-horizontal) - 60px),
       calc(sin(var(--angle)) * var(--radius-vertical))
     )
     rotate(calc(var(--angle) - 270deg + var(--offset-angle) / 3));
