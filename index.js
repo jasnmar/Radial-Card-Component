@@ -15,6 +15,9 @@ function startup() {
   arcSpreadEl.value = getArcSpread()
   arcSpreadEl.addEventListener("change", updateArcSpread)
 
+  const cardDepthEl = document.getElementById("card-depth")
+  cardDepthEl.value = getCardDepth()
+  cardDepthEl.addEventListener("change", updateCardDepth)
 }
 //Card count
 function getCardCount() {
@@ -70,20 +73,38 @@ function updateAspectRatio() {
 //Arc Spread
 function getArcSpread() {
   const component = document.getElementById("card-component")
-    const currentSpread = getComputedStyle(component.children[0]).getPropertyValue(
-    "--arc-spread",
-  )
+  const currentSpread = getComputedStyle(
+    component.children[0],
+  ).getPropertyValue("--arc-spread")
   console.log("currentSpread: ", currentSpread)
-
-  return currentSpread.replace('deg','')
+  return currentSpread.replace("deg", "")
 }
 function updateArcSpread(e) {
-
   const component = document.getElementById("card-component")
   for (let i = 0; i < component.children.length; i++) {
-    component.children[i].style.setProperty("--arc-spread", e.target.value + "deg")
+    component.children[i].style.setProperty(
+      "--arc-spread",
+      e.target.value + "deg",
+    )
   }
-
+}
+//Card Depth
+function getCardDepth() {
+  const component = document.getElementById("card-component")
+  const currentDepth = getComputedStyle(component.children[0]).getPropertyValue(
+    "--card-depth",
+  )
+  console.log("currentDepth: ", currentDepth)
+  return currentDepth.replace("%", "")
+}
+function updateCardDepth(e) {
+  const component = document.getElementById("card-component")
+  for (let i = 0; i < component.children.length; i++) {
+    component.children[i].style.setProperty(
+      "--card-depth",
+      e.target.value + "%",
+    )
+  }
 }
 
 startup()
