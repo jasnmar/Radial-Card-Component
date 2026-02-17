@@ -7,12 +7,12 @@
 :root {
   /* This sets the color of the cards on a 360 degree color wheel. */
   /* The background is the "opposite" color */
-  --theme-color: 100;
+  --theme-color: 150;
 }
 
 html,
 body {
-  max-height: 100dvh;
+  height: 100dvh;
   background-image: radial-gradient(
     circle,
     oklch(50% 0.2 calc(var(--theme-color) + 180)) 200px,
@@ -40,11 +40,12 @@ body {
   align-items: center;
 }
 .controls {
+  position:absolute;
+  top:0;
   align-self: flex-start;
   justify-self: flex-start;
   margin:0;
   padding:0;
-  outline:1q solid red;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -54,7 +55,7 @@ body {
 .card-component {
   position: relative;
   height: 500px;
-  width: 100%;
+  width: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,12 +69,11 @@ body {
   aspect-ratio: 1 / 1.6;
   /* softness of the edges of the cards */
   border-radius: 25px;
-  border:50px solid #0000;
   /* controls angle of the arc that the cards can spread across. Somewhere between 20 and 50 degrees */
-  --arc-spread: 40deg;
+  --arc-spread: 50deg;
   /* "depth" of cards... How much smaller are the ones in the back (less than 10% is best)*/
   --card-depth: 5%;
-  /* height of a car, in relation to their container, somewhere in the 50cqh range seems to work */
+  /* height of a card, in relation to their container, somewhere in the 50cqh range seems to work */
   --height: 50cqh;
   /* The color space you want the cards to use, 0-360 degree color wheel */
 
