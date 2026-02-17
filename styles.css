@@ -55,7 +55,7 @@ body {
 .card-component {
   position: relative;
   height: 500px;
-  width: 80%;
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,7 +74,7 @@ body {
   /* "depth" of cards... How much smaller are the ones in the back (less than 10% is best)*/
   --card-depth: 5%;
   /* height of a card, in relation to their container, somewhere in the 50cqh range seems to work */
-  --height: 50cqh;
+  --height: 40cqh;
   /* The color space you want the cards to use, 0-360 degree color wheel */
 
   /* positions cards along a circular path and rotates them according to their position around that arc */

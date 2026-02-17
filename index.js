@@ -10,8 +10,13 @@ function startup() {
   const aspectRatioEl = document.getElementById("aspect-ratio")
   aspectRatioEl.value = getAspectRatio()
   aspectRatioEl.addEventListener("change", updateAspectRatio)
+
+  const arcSpreadEl = document.getElementById("arc-spread")
+  arcSpreadEl.value = getArcSpread()
+  arcSpreadEl.addEventListener("change", updateArcSpread)
+
 }
-//Cards
+//Card count
 function getCardCount() {
   const cardContainer = document.getElementById("card-component")
   return cardContainer.children.length
@@ -24,7 +29,7 @@ function updateCards(e) {
   }
 }
 
-//Color Selector
+//Color
 function getcolor() {
   const docEl = document.documentElement
   const color = getComputedStyle(docEl).getPropertyValue("--theme-color").trim()
@@ -60,6 +65,25 @@ function updateAspectRatio() {
   for (let i = 0; i < component.children.length; i++) {
     component.children[i].style.setProperty("aspect-ratio", arString)
   }
+}
+
+//Arc Spread
+function getArcSpread() {
+  const component = document.getElementById("card-component")
+    const currentSpread = getComputedStyle(component.children[0]).getPropertyValue(
+    "--arc-spread",
+  )
+  console.log("currentSpread: ", currentSpread)
+
+  return currentSpread.replace('deg','')
+}
+function updateArcSpread(e) {
+
+  const component = document.getElementById("card-component")
+  for (let i = 0; i < component.children.length; i++) {
+    component.children[i].style.setProperty("--arc-spread", e.target.value + "deg")
+  }
+
 }
 
 startup()
