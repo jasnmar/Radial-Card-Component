@@ -1,6 +1,5 @@
 import { getArcSpread, getCardCount } from "./controls.js"
 
-
 export function showDebugData() {
   const cards = document.getElementById("card-component")
   //
@@ -9,14 +8,10 @@ export function showDebugData() {
   const debugInfo = document.createElement("div")
   debugInfo.id = "debug-info"
   //Parent Width
-  const parentWidth = getComputedStyle(cards).getPropertyValue("width")
   const pWidth = document.createElement("p")
-  pWidth.textContent = `Parent Width: ${parentWidth}`
   debugInfo.appendChild(pWidth)
   //Parent Height
-  const parentHeight = getComputedStyle(cards).getPropertyValue("height")
   const pHeight = document.createElement("p")
-  pHeight.textContent = `Parent Height: ${parentHeight}`
   debugInfo.appendChild(pHeight)
   //Offset Angle
   // const offSetAngle = getComputedStyle(cards.children[0]).getPropertyValue("--offset-angle")
@@ -25,16 +20,27 @@ export function showDebugData() {
   pOffsetAngle.textContent = `Offset Angle: ${offSetAngle}`
   debugInfo.appendChild(pOffsetAngle)
   //
-
   //Layout Rep
+  //
   document.body.appendChild(debugInfo)
   const layoutRep = document.createElement("div")
   layoutRep.id = "layout-rep"
   document.body.appendChild(layoutRep)
-  layoutRep.style.setProperty("width", parentWidth)
-  layoutRep.style.setProperty("height", parentHeight)
+
+  //Update Dimensions
+  const updateDimensions = () => {
+    const styles = getComputedStyle(cards)
+    const width = styles.getPropertyValue("width")
+    const height = styles.getPropertyValue("height")
+    pWidth.textContent = `Parent Width: ${width}`
+    pHeight.textContent = `Parent Height: ${height}`
+    layoutRep.style.setProperty("width", width)
+    layoutRep.style.setProperty("height", height)
+  }
+  updateDimensions()
+  new ResizeObserver(updateDimensions).observe(cards)
+
   layoutRep.style.setProperty("--ellipse-width", getArcSpread())
-  // layoutRep.style.setProperty("--ellipse-height", getArcHeight())
 
   //
   //Card Info
@@ -44,9 +50,8 @@ export function showDebugData() {
     const card = cards.children[i]
     const totalCards = cards.children.length + 1
 
-      const arcSpreadEl = document.getElementById("arc-spread")
-      arcSpreadEl.value = getArcSpread()
-
+    const arcSpreadEl = document.getElementById("arc-spread")
+    arcSpreadEl.value = getArcSpread()
 
     const data = document.createElement("div")
     data.classList.add("debug-data")
@@ -81,6 +86,5 @@ export function showDebugData() {
     cardAngleEl.textContent = cardAngleText
     data.appendChild(cardAngleEl)
 
-    //calc(var(--cards-from-center) * var(--offset-angle) + 270deg);
   }
 }

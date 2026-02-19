@@ -1,6 +1,7 @@
 const DEBUG = true
 
 if (DEBUG) {
+  import("./debug.css")
   import("./controls.js").then((debugControls) => {
     debugControls.startupControls()
   })
@@ -8,5 +9,3 @@ if (DEBUG) {
     debugInfo.showDebugData()
   })
 }
-
-

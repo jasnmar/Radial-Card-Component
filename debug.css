@@ -1,0 +1,46 @@
+/* */
+/* Debug styles */
+/* */
+.controls {
+  order: 1;
+}
+.card-component {
+  order: 2;
+}
+.controls {
+  margin: 1rem;
+  align-self: flex-start;
+  justify-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-height: 150px;
+  gap: 1rem;
+}
+
+.control-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+#debug-info {
+  order: 3;
+  display: flex;
+  flex-direction: column;
+}
+.debug-data {
+  padding: 0.5rem;
+  text-wrap: nowrap;
+  overflow: hidden;
+  /* outline:1q solid red; */
+}
+#layout-rep {
+  order: 4;
+  outline: 1Q solid red;
+  --radius-horizontal: 100cqi;
+  background: radial-gradient(
+    var(--radius-horizontal) 100px,
+    red 50%,
+    #0000 0 100%
+  );
+}
