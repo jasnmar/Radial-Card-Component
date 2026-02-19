@@ -7,10 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && npx wrangler pages deploy dist --project-name Radial-Card-Component"
+    "deploy": "npm run build && npx wrangler pages deploy dist --project-name radial-card-component"
   },
   "devDependencies": {
-    "vite": "^5.2.0",
-    "wrangler": "^4.67.0"
+    "vite": "^5.2.0"
   }
 }
