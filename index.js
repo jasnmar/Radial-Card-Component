@@ -1,4 +1,4 @@
-const DEBUG = true
+const DEBUG = localStorage.getItem("DEBUG") === "true"
 
 if (DEBUG) {
   import("./debug.css")
