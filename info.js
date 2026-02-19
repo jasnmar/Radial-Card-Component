@@ -77,7 +77,7 @@ export function showDebugData() {
     //Card Angle
     const cardAngleEl = document.createElement("p")
     const cardAngleData = fromCenterData * offSetAngle
-    const cardAngleText = `Card Angle: ${cardAngleData} + 270deg`
+    const cardAngleText = `Card Angle: ${cardAngleData.toFixed(2)} + 270deg`
     cardAngleEl.textContent = cardAngleText
     data.appendChild(cardAngleEl)
 
