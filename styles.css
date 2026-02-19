@@ -207,4 +207,7 @@ body {
 }
 #layout-rep {
   outline:1q solid red;
+  --radius-horizontal:100cqi;
+  background:radial-gradient(var(--radius-horizontal) 100px, red 50%, #0000 0 100%);
+  
 }
