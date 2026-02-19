@@ -1,4 +1,4 @@
-* {
+*, *:before, *:after{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -40,42 +40,49 @@ body {
   align-items: center;
 }
 .controls {
-  position:absolute;
-  top:0;
+  margin:1rem;
   align-self: flex-start;
   justify-self: flex-start;
-  margin:0;
-  padding:0;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  max-height:150px;
+  gap:1rem;
 }
+
+.control-container {
+  display:flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+  
 
 .card-component {
   position: relative;
   height: 500px;
-  width: 50%;
+  width: 100cqw;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 2rem;
-  container-type: inline-size;
+  container-type: size;
+  container-name: card-component;
 }
 
+/* This styles all of the individual cards. */
 .card-component > * {
   /* Settings that can be adjusted based on your needs */
   /* no width specified, using golden ratio to size cards off of height */
-  aspect-ratio: 1 / 1.6;
+  aspect-ratio: auto 1 / 1.6;
   /* softness of the edges of the cards */
   border-radius: 25px;
   /* controls angle of the arc that the cards can spread across. Somewhere between 20 and 50 degrees */
+  /* Arc spread isn't what I thought it was */
   --arc-spread: 50deg;
   /* "depth" of cards... How much smaller are the ones in the back (less than 10% is best)*/
   --card-depth: 5%;
   /* height of a card, in relation to their container, somewhere in the 50cqh range seems to work */
-  --height: 40cqh;
-  /* The color space you want the cards to use, 0-360 degree color wheel */
+  --height: 100cqh;
 
   /* positions cards along a circular path and rotates them according to their position around that arc */
   position: absolute;
@@ -93,7 +100,7 @@ body {
   --radius-horizontal: 100cqw;
   /* calculate unified distance from center, no abs() to keep negative numbers for rotation calc */
   --cards-from-center: calc(var(--index) - (var(--total-siblings) + 1) / 2);
-  /* defines the amount of angle per card to be rotated */
+  /* defines the amount of angle each card is going to be rotated */
   --offset-angle: calc(var(--arc-spread) / var(--total-siblings));
   /* Calculate the angle for each card from the top center which is 270deg */
   --angle: calc(var(--cards-from-center) * var(--offset-angle) + 270deg);
@@ -111,8 +118,15 @@ body {
   background-color: oklch(
     calc(var(--index) * 7% + 30%) 0.15 var(--theme-color)
   );
-  transform: translate(0%, -45%)
+
+  /* Puts the cards on the curve */
+  transform: 
+    /* Moves the cards up on the "curve". Moves them over 0 and up half of their height*/
+    translate(0%, -50%)
+
     translate(
+      /* --angle is the angle of each card. --radius-horizontal is the total
+      width of the control */
       calc(cos(var(--angle)) * var(--radius-horizontal)),
       calc(sin(var(--angle)) * var(--radius-vertical))
     )
@@ -125,6 +139,7 @@ body {
 
   z-index: var(--layer);
 }
+/* Styles all of the individual cards, on HOVER */
 /* would like to adjust hover state from transistion to animation, need to fine tune card movement */
 .card-component > *:hover {
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.8);
@@ -181,3 +196,15 @@ body {
     rotate(calc(var(--angle) - 270deg + var(--offset-angle) / 3));
 }
 
+
+
+#debug-info {
+  display:flex;
+  flex-direction: column;
+}
+.debug-data {
+  padding:1rem;
+}
+#layout-rep {
+  outline:1q solid red;
+}
