@@ -15,7 +15,10 @@
 html,
 body {
   max-height: 100dvh;
-  background-image: radial-gradient(circle, oklch(40% 0.2 240) 30%, oklch(80% 0.04 240)  100%);
+  background-image: radial-gradient( circle,
+    oklch(50% 0.2 calc(var(--theme-color) + 180)) 200px,
+    oklch(40% 0.08 240) 100%
+  );
 }
 
 body {
@@ -55,7 +58,7 @@ body {
 .card-component > * {
   /* Settings that can be adjusted based on your needs */
   /* no width specified, using golden ratio to size cards off of height */
-  aspect-ratio: auto 1 / 1.6;
+  aspect-ratio: auto 1 / 2;
   /* softness of the edges of the cards */
   border-radius: 25px;
   /* controls angle of the arc that the cards can spread across. Somewhere between 20 and 50 degrees */
@@ -115,7 +118,9 @@ body {
 
   border-radius: 15px;
 
-  background-color: oklch(calc(var(--index) * 7% + 20%) 0.15 150);
+  background-color: oklch(
+    calc(var(--index) * 7% + 30%) 0.15 var(--theme-color)
+  );
 
   transition: transform 0.3s ease,
               z-index .3s;
