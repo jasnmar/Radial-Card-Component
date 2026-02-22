@@ -4,7 +4,8 @@
   box-sizing: border-box;
 }
 
-:root{  /* This sets the color of the cards on a 360 degree color wheel. */
+:root {
+  /* This sets the color of the cards on a 360 degree color wheel. */
   /* The background is the "opposite" color */
   --theme-color: 150;
 }
@@ -12,7 +13,11 @@
 html,
 body {
   max-height: 100dvh;
-  background-image: radial-gradient(circle, oklch(80% 0.1 240) 35%, oklch(40% 0.3 240)  100%);  
+  background-image: radial-gradient(
+    circle,
+    oklch(80% 0.1 240) 35%,
+    oklch(40% 0.3 240) 100%
+  );
 }
 
 body {
@@ -48,37 +53,12 @@ body {
   align-items: center;
   container-type: size;
   container-name: card-component;
-  outline: 2px solid;
 }
 
 /* This is where the magic/math happens */
 .card-component > * {
   --total-siblings: sibling-count();
   --index: sibling-index();
-  /* Settings that can be adjusted based on your needs */
-  /* no width specified, using golden ratio to size cards off of height */
-  aspect-ratio: auto 1 / 1.6;
-  /* softness of the edges of the cards */
-  border-radius: 25px;
-  /* controls angle of the arc that the cards can spread across. Somewhere between 20 and 50 degrees */
-  /* Arc spread isn't what I thought it was */
-  --arc-spread: 50deg;
-  /* "depth" of cards... How much smaller are the ones in the back (less than 10% is best)*/
-  --card-depth: 5%;
-  /* height of a card, in relation to their container, somewhere in the 50cqh range seems to work */
-  --height: 100cqh;
-
-  /* positions cards along a circular path and rotates them according to their position around that arc */
-  position: absolute;
-  /* compensates for the transform */
-  top: calc(var(--radius-vertical) + var(--height) / 2);
-  height: var(--scale-from-center-height);
-
-  /* Internal calculations */
-  /* Total number of cards in the component (less than 15ish) */
-
-  /* index of current card */
-
   /* height based off of container height but clamped to prevent too much shrinkage */
   --height: clamp(150px, 75cqh, 400px);
 
@@ -91,15 +71,25 @@ body {
   /* controls amount of space cards can spread across */
   --arc-spread: 40deg;
 
-  /* controls the reduction of size in cards further from the center */
-  --card-depth: 4%;
+  --card-depth: 5%;
+  /* height of a card, in relation to their container, somewhere in the 50cqh range seems to work */
 
   /* gives each card an equal spread angle used to calc angle*/
   --offset-angle: calc(var(--arc-spread) / var(--total-siblings));
+
+  /* softness of the edges of the cards */
+  border-radius: 25px;
+  /* controls angle of the arc that the cards can spread across. Somewhere between 20 and 50 degrees */
+  /* Arc spread isn't what I thought it was */
+  --arc-spread: 50deg;
+  /* "depth" of cards... How much smaller are the ones in the back (less than 10% is best)*/
+
   /* Calculate the angle for each card from the top center which is 270deg */
   --angle: calc(var(--cards-from-center) * var(--offset-angle) + 270deg);
+
   /* Calculate the z-index for each card so edges are underneath */
   --layer: calc(var(--total-siblings) - abs(var(--cards-from-center)));
+
   /* large imaginary radius for smooth curve of cards adjusted by card height to create a smooth bottom curve*/
   --radius-vertical: calc(
     400px + (var(--height) - var(--scale-from-center-height))
@@ -112,11 +102,12 @@ body {
   --scale-from-center-height: calc(
     var(--height) - abs(var(--cards-from-center)) * var(--card-depth)
   );
-
+  
   /* compensates for the transform and centers vertically within container*/
-  top: calc(
-    var(--radius-vertical) + calc(100cqh - var(--scale-from-center-height)) / 2
-  );
+  top: calc(var(--radius-vertical) + var(--height) / 2);
+  
+  /* positions cards along a circular path and rotates them according to their position around that arc */
+  position: absolute;
 
   /* Puts the cards on the curve */
   transform: translate(
@@ -152,6 +143,7 @@ body {
     scale(1.05) rotate(calc(var(--cards-from-center) * 3deg));
 
   cursor: pointer;
+  
   z-index: 100;
 
   /* hover state for the card to the right of hovered */
