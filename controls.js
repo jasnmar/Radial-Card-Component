@@ -26,6 +26,11 @@ export function startupControls() {
   cardHeightEl.addEventListener("change", updateCardHeight)
 }
 
+/** 
+<label for="colorPicker">Select a Color:</label>
+<input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
+*/
+
 function createControlsHTML() {
   const controlsDiv = document.createElement("div")
   controlsDiv.id = "controls"

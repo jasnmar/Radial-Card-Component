@@ -1,13 +1,10 @@
-*,
-*:before,
-*:after {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-:root {
-  /* This sets the color of the cards on a 360 degree color wheel. */
+:root{  /* This sets the color of the cards on a 360 degree color wheel. */
   /* The background is the "opposite" color */
   --theme-color: 150;
 }
@@ -15,16 +12,14 @@
 html,
 body {
   max-height: 100dvh;
-  background-image: radial-gradient( circle,
-    oklch(50% 0.2 calc(var(--theme-color) + 180)) 200px,
-    oklch(40% 0.08 240) 100%
-  );
+  background-image: radial-gradient(circle, oklch(80% 0.1 240) 35%, oklch(40% 0.3 240)  100%);  
 }
 
 body {
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  justify-content: center;
+  align-items: center;
   font-family:
     system-ui,
     -apple-system,
@@ -51,17 +46,18 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-
   container-type: size;
   container-name: card-component;
-  outline:2px solid;
+  outline: 2px solid;
 }
 
 /* This is where the magic/math happens */
 .card-component > * {
+  --total-siblings: sibling-count();
+  --index: sibling-index();
   /* Settings that can be adjusted based on your needs */
   /* no width specified, using golden ratio to size cards off of height */
-  aspect-ratio: auto 1 / 2;
+  aspect-ratio: auto 1 / 1.6;
   /* softness of the edges of the cards */
   border-radius: 25px;
   /* controls angle of the arc that the cards can spread across. Somewhere between 20 and 50 degrees */
@@ -80,9 +76,8 @@ body {
 
   /* Internal calculations */
   /* Total number of cards in the component (less than 15ish) */
-  --total-siblings: sibling-count();
+
   /* index of current card */
-  --index: sibling-index();
 
   /* height based off of container height but clamped to prevent too much shrinkage */
   --height: clamp(150px, 75cqh, 400px);
@@ -106,23 +101,29 @@ body {
   /* Calculate the z-index for each card so edges are underneath */
   --layer: calc(var(--total-siblings) - abs(var(--cards-from-center)));
   /* large imaginary radius for smooth curve of cards adjusted by card height to create a smooth bottom curve*/
-  --radius-vertical: calc(400px + (var(--height) - var(--scale-from-center-height)));
+  --radius-vertical: calc(
+    400px + (var(--height) - var(--scale-from-center-height))
+  );
 
   /* large radius for smooth curve of cards also affects the horizontal spread */
   --radius-horizontal: 1000px;
 
-/* reduces size of cards as they get further from the center */
-  --scale-from-center-height: calc(var(--height) - abs(var(--cards-from-center)) * var(--card-depth));
+  /* reduces size of cards as they get further from the center */
+  --scale-from-center-height: calc(
+    var(--height) - abs(var(--cards-from-center)) * var(--card-depth)
+  );
 
   /* compensates for the transform and centers vertically within container*/
-  top: calc(var(--radius-vertical) + calc(100cqh - var(--scale-from-center-height)) / 2);
+  top: calc(
+    var(--radius-vertical) + calc(100cqh - var(--scale-from-center-height)) / 2
+  );
 
   /* Puts the cards on the curve */
-  transform: 
-        translate(calc(cos(var(--angle)) * var(--radius-horizontal)),
-        calc(sin(var(--angle)) * var(--radius-vertical))) 
-
-        rotate(calc(var(--angle) - 270deg));
+  transform: translate(
+      calc(cos(var(--angle)) * var(--radius-horizontal)),
+      calc(sin(var(--angle)) * var(--radius-vertical))
+    )
+    rotate(calc(var(--angle) - 270deg));
 
   height: var(--scale-from-center-height);
 
@@ -132,54 +133,63 @@ body {
     calc(var(--index) * 7% + 30%) 0.15 var(--theme-color)
   );
 
-  transition: transform 0.3s ease,
-              z-index .3s;
+  transition:
+    transform 0.3s ease,
+    z-index 0.3s;
   transition-behavior: allow-discrete;
-  
-  z-index:var(--layer);
+
+  z-index: var(--layer);
 }
 
 /* would like to adjust hover state from transistion to animation, need to fine tune card movement */
 .card-component > *:is(:hover, :focus) {
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.8);
 
-  box-shadow: 0 10px 10px rgba(0,0,0,0.8);
-
-  transform: 
-        translate(calc(cos(var(--angle)) * var(--radius-horizontal)),
-        calc(sin(var(--angle)) * var(--radius-vertical) - 80px)) scale(1.05) rotate(calc(var(--cards-from-center) * 3deg));
+  transform: translate(
+      calc(cos(var(--angle)) * var(--radius-horizontal)),
+      calc(sin(var(--angle)) * var(--radius-vertical) - 80px)
+    )
+    scale(1.05) rotate(calc(var(--cards-from-center) * 3deg));
 
   cursor: pointer;
   z-index: 100;
 
   /* hover state for the card to the right of hovered */
   + * {
+    transform: translate(
+        calc(cos(var(--angle)) * var(--radius-horizontal) + 30px),
+        calc(sin(var(--angle)) * var(--radius-vertical) - 20px)
+      )
+      rotate(calc(var(--angle) - 270deg - 3deg));
 
-    transform: 
-        translate(calc(cos(var(--angle)) * var(--radius-horizontal) + 30px),
-        calc(sin(var(--angle)) * var(--radius-vertical) - 20px)) rotate(calc(var(--angle) - 270deg - 3deg));
-        
-        /* hover state for the card two positions to the right of hovered */
-        + * {
-          transform: 
-          translate(calc(cos(var(--angle)) * var(--radius-horizontal) + 30px),
-          calc(sin(var(--angle)) * var(--radius-vertical))) rotate(calc(var(--angle) - 270deg - 1deg));
-        }
+    /* hover state for the card two positions to the right of hovered */
+    + * {
+      transform: translate(
+          calc(cos(var(--angle)) * var(--radius-horizontal) + 30px),
+          calc(sin(var(--angle)) * var(--radius-vertical))
+        )
+        rotate(calc(var(--angle) - 270deg - 1deg));
+    }
   }
 }
 
 /* hover state for the card to the left of hovered  */
 .card-component > *:has(+ *:is(:hover, :focus)) {
-  transform: 
-        translate(calc(cos(var(--angle)) * var(--radius-horizontal) - 20px),
-        calc(sin(var(--angle)) * var(--radius-vertical) - 20px)) rotate(calc(var(--angle) - 270deg + 3deg));
-
+  transform: translate(
+      calc(cos(var(--angle)) * var(--radius-horizontal) - 20px),
+      calc(sin(var(--angle)) * var(--radius-vertical) - 20px)
+    )
+    rotate(calc(var(--angle) - 270deg + 3deg));
 }
 
 /* hover state for the card two positions to the left of hovered */
-.card-component > *:has(+ * + *.card-component>*:has(+ *:is(:hover, :focus))) {
-  transform: 
-        translate(calc(cos(var(--angle)) * var(--radius-horizontal) - 20px),
-        calc(sin(var(--angle)) * var(--radius-vertical))) rotate(calc(var(--angle) - 270deg + 1deg));
+.card-component
+  > *:has(+ * + *.card-component > *:has(+ *:is(:hover, :focus))) {
+  transform: translate(
+      calc(cos(var(--angle)) * var(--radius-horizontal) - 20px),
+      calc(sin(var(--angle)) * var(--radius-vertical))
+    )
+    rotate(calc(var(--angle) - 270deg + 1deg));
 }
 
 /* container queries need work to make this responsive */
